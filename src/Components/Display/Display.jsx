@@ -22,12 +22,7 @@ const Display = (props) => (
 			</div>
 		)}
 		<Row>
-			<Controls runProgram={(sequence) => props.runProgram(sequence)} />
-		</Row>
-		<Row style={{ marginTop: 150, justifyContent: "center" }}>
-			<Button color="warning" onClick={() => props.reset()}>
-				Reset program
-			</Button>
+			<Controls runProgram={(sequence) => props.runProgram(sequence)} reset={() => props.reset()} />
 		</Row>
 	</Col>
 );

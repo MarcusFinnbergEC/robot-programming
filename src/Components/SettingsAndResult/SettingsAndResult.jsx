@@ -90,7 +90,7 @@ const SettingsAndResult = (props) => {
 			</Row>
 			<Row style={{ justifyContent: "flex-end" }}>
 				<Button color="primary" onClick={() => setCustomSetup()}>
-					Confirm setup
+					Save
 				</Button>
 			</Row>
 		</Col>

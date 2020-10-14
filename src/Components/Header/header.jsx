@@ -3,11 +3,9 @@ import { Row } from "reactstrap";
 
 const Header = () => (
 	<Row
+		className="header-with-background"
 		style={{
-			justifyContent: "center",
-			padding: "5rem",
-			marginBottom: 25,
-			backgroundColor: "#080808",
+			backgroundImage: `url(${process.env.PUBLIC_URL}/Media/robot-background.png)`,
 		}}
 	>
 		<h1 className="uppercase headline">Move-it Robot</h1>

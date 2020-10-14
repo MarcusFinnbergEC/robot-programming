@@ -8,6 +8,16 @@
 	color: #fff;
 	text-shadow: #dc3545 4px 4px 4px;
 }
+.header-with-background {
+	justify-content: center;
+	align-items: center;
+	padding: 5rem;
+	margin-bottom: 25px;
+	background-color: #080808;
+	background-position: calc(50% + 500px) top;
+	background-repeat: no-repeat;
+	background-size: 250px 250px;
+}
 .display {
 	width: 100%;
 	border: 1px solid #ced4da;
