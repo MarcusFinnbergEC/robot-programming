@@ -4,6 +4,10 @@
 .uppercase {
 	text-transform: uppercase;
 }
+.headline {
+	color: #fff;
+	text-shadow: #dc3545 4px 4px 4px;
+}
 .display {
 	width: 100%;
 	border: 1px solid #ced4da;

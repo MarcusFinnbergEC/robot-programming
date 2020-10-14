@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row } from "reactstrap";
+import { Col, Row, Button } from "reactstrap";
 import Controls from "../Controls/Controls";
 
 const Display = (props) => {
@@ -18,10 +18,17 @@ const Display = (props) => {
 				<div className="display text-align-center">
 					<p>Your starting position is:</p>
 					<b>{props.startingPosition}</b>
+					<p>Current room size is:</p>
+					<b>{`${props.roomSize.x + 1} x ${props.roomSize.y + 1}`}</b>
 				</div>
 			)}
 			<Row>
-				<Controls runProgram={(sequence) => props.runProgram(sequence)} />
+				<Controls runProgram={(sequence) =>  props.runProgram(sequence)} />
+			</Row>
+			<Row style={{ marginTop: 150, justifyContent: "center" }}>
+				<Button color="warning" onClick={() => props.reset()}>
+					Reset program
+				</Button>
 			</Row>
 		</Col>
 	);

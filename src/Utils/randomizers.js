@@ -8,7 +8,6 @@ const randomizeStartingPosition = (max) => {
 const randomizeStartingDirection = () => {
   const randomDirectionValue = Math.floor(Math.random() * 4)
   let randomDirection = ''
-  // console.log('radomValue', randomDirectionValue)
   switch (randomDirectionValue) {
     case 0:
       randomDirection = 'N';

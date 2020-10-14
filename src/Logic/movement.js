@@ -65,7 +65,6 @@ const turn = (currentDirection, leftOrRight) => {
 }
 
 async function move (sequence, currentPosition, currentDirection, roomSize ) {
-    console.log('sequence:', sequence, sequence.length)
     let direction = currentDirection
     let position = currentPosition
     sequence.forEach((moveType) => {
@@ -74,7 +73,6 @@ async function move (sequence, currentPosition, currentDirection, roomSize ) {
         }
         else {
           position = getCoordinates(position, direction, roomSize)
-          console.log('position', position)
         }
     })
     return {position, direction}

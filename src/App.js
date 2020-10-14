@@ -11,11 +11,16 @@ import move from './Logic/movement'
 
 const App = () => {
   const [roomSize, setRoomSize] = useState({x: 4, y: 4})
-  const [startingPosition, setStartingPosition] = useState({x: 1, y: 2}); //randomizeStartingPosition(roomSize.x)
+  const [startingPosition, setStartingPosition] = useState({x: 1, y: 2});
   const [finalPosition, setFinalPosition] = useState()
-  const [startingDirection, setStartingDirection] = useState('N') //randomizeStartingDirection
+  const [startingDirection, setStartingDirection] = useState('N')
   const [finalDirection, setFinalDirection] = useState()
   const [sequence, setSequence] = useState('')
+
+ useEffect(() => {
+    setStartingPosition(randomizeStartingPosition(4))
+    setStartingDirection(randomizeStartingDirection)
+  }, [])
 
   useEffect(() => {
     setFinalPosition()
@@ -25,14 +30,16 @@ const App = () => {
     setFinalDirection()
   }, [startingDirection])
 
-  useEffect(() => {
-    setStartingPosition({x: 1, y: 2})
-    setStartingDirection('N')
-  }, [roomSize])
+  const setCustomSetup = (data) => { 
+    setStartingPosition({ x: data.xAxis, y: data.yAxis })
+    setStartingDirection(data.direction) 
+    setRoomSize(data.newRoomSize)
+  }
 
   const reset = () => {
-    setStartingPosition(randomizeStartingPosition(roomSize.x))
+    setStartingPosition(randomizeStartingPosition(4))
     setStartingDirection(randomizeStartingDirection)
+    setRoomSize({ x: 4, y: 4 })
     setSequence('')
   }
 
@@ -46,14 +53,15 @@ const App = () => {
 
   return (
     <div className="App">
-      <Container>
+      <Container fluid>
         <Header />
-        <Container fluid>
+        <Container>
           <Row>
             <Infobox />
             <Display runnedSequence={sequence} runProgram={(newSequence) => runProgram(newSequence)} startingPosition={`${startingPosition.x}, ${startingPosition.y}, ${startingDirection}`}
-            finalPosition={finalPosition && `${finalPosition.x}, ${finalPosition.y}, ${finalDirection}`}/>
-            <SettingsAndResult runnedSequence={sequence} setRoomSize={setRoomSize} reset={reset}/>
+            finalPosition={finalPosition && `${finalPosition.x}, ${finalPosition.y}, ${finalDirection}`}
+            reset={reset} roomSize={roomSize}/>
+            <SettingsAndResult runnedSequence={sequence} setRoomSize={setRoomSize} roomSize={roomSize} setCustomSetup={(data) => setCustomSetup(data)}/>
           </Row>
         </Container>
       </Container>

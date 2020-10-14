@@ -1,10 +1,18 @@
 import React from "react";
+import { Row } from "reactstrap";
 
 const Header = () => {
 	return (
-		<div className="text-align-center">
-			<h1 className="uppercase">Move-it Robot</h1>
-		</div>
+		<Row
+			style={{
+				justifyContent: "center",
+				padding: "5rem",
+				marginBottom: 25,
+				backgroundColor: "#080808",
+			}}
+		>
+			<h1 className="uppercase headline">Move-it Robot</h1>
+		</Row>
 	);
 };
 

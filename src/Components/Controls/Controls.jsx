@@ -22,14 +22,19 @@ const Controls = (props) => {
 		}
 	};
 
+	const runProgram = (event) => {
+		event.preventDefault();
+		props.runProgram(string);
+		document.getElementById("sequence-form").reset();
+	};
+
 	return (
 		<Col sm={12}>
-			<Form className="text-align-center">
+			<Form className="text-align-center" id="sequence-form">
 				<Input
 					placeholder="insert your sequence here or use the control buttons..."
 					onKeyPress={(event) => onKeyPress(event)}
 					onChange={(event) => setString(event.target.value.toUpperCase())}
-					value={string}
 					className="uppercase"
 				/>
 				<Row style={{ justifyContent: "center", marginTop: 15 }}>
@@ -59,8 +64,7 @@ const Controls = (props) => {
 				<Button
 					color="danger"
 					onClick={(event) => {
-						event.preventDefault();
-						props.runProgram(string);
+						runProgram(event);
 					}}
 					style={{ marginTop: 5 }}
 				>
