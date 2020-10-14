@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row, Button } from "reactstrap";
+import { Col, Row } from "reactstrap";
 import Controls from "../Controls/Controls";
 
 const Display = (props) => (
@@ -22,7 +22,10 @@ const Display = (props) => (
 			</div>
 		)}
 		<Row>
-			<Controls runProgram={(sequence) => props.runProgram(sequence)} reset={() => props.reset()} />
+			<Controls
+				runProgram={(sequence) => props.runProgram(sequence)}
+				reset={() => props.reset()}
+			/>
 		</Row>
 	</Col>
 );
