@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Row, Col, Form, Input, Button } from "reactstrap";
 
 const Controls = (props) => {
-	const [string, setString] = useState("");
+	const [string, setString] = useState('');
 
 	const handleControlButtonClick = (event, direction) => {
 		event.preventDefault();
@@ -25,6 +25,7 @@ const Controls = (props) => {
 	const runProgram = (event) => {
 		event.preventDefault();
 		props.runProgram(string);
+		setString('')
 		document.getElementById("sequence-form").reset();
 	};
 
@@ -35,6 +36,7 @@ const Controls = (props) => {
 					placeholder="insert your sequence here or use the control buttons..."
 					onKeyPress={(event) => onKeyPress(event)}
 					onChange={(event) => setString(event.target.value.toUpperCase())}
+					value={string}
 					className="uppercase"
 				/>
 				<Row style={{ justifyContent: "center", marginTop: 15 }}>
