@@ -6,63 +6,29 @@ import Infobox from './Components/Infobox/Infobox';
 import Display from './Components/Display/Display';
 import SettingsAndResult from './Components/SettingsAndResult/SettingsAndResult';
 import { randomizeStartingDirection, randomizeStartingPosition } from './Utils/randomizers'
-import {move, turn} from './Logic/movement'
+import move from './Logic/movement'
 
 
 const App = () => {
   const [roomSize, setRoomSize] = useState({x: 4, y: 4})
-  const [startingPosition, setStartingPosition] = useState(randomizeStartingPosition(roomSize.x));
-  const [currentPosition, setCurrentPosition] = useState();
+  const [startingPosition, setStartingPosition] = useState({x: 1, y: 2}); //randomizeStartingPosition(roomSize.x)
   const [finalPosition, setFinalPosition] = useState()
-  const [startingDirection, setStartingDirection] = useState(randomizeStartingDirection)
-  const [currentDirection, setCurrentDirection] = useState()
+  const [startingDirection, setStartingDirection] = useState('N') //randomizeStartingDirection
   const [finalDirection, setFinalDirection] = useState()
   const [sequence, setSequence] = useState('')
 
   useEffect(() => {
-    setCurrentPosition(startingPosition)
     setFinalPosition()
   }, [startingPosition])
 
   useEffect(() => {
-    setCurrentDirection(startingDirection)
     setFinalDirection()
   }, [startingDirection])
 
   useEffect(() => {
-    setStartingPosition(randomizeStartingPosition(roomSize.x))
-    setStartingDirection(randomizeStartingDirection)
+    setStartingPosition({x: 1, y: 2})
+    setStartingDirection('N')
   }, [roomSize])
-
-  useEffect(() => {
-    if(sequence.length) {
-      const sequenceArray = [...sequence]
-      let direction = currentDirection
-      let position = currentPosition
-      sequenceArray.forEach((moveType, index) => {
-        if(moveType === "L" || moveType === "R") {
-          direction = turn(direction, moveType)
-          if(index === sequenceArray.length - 1) {
-            console.log('FINAL direction', direction)
-            setFinalDirection(direction)
-            console.log('FINAL position', position)
-            setFinalPosition(position)
-          }
-        }
-        else {
-          position = move(currentPosition, currentDirection, roomSize)
-           if(index === sequenceArray.length - 1) {
-            setFinalDirection(direction)
-            setFinalPosition(position)
-          }
-        }
-      })
-    }
-  }, [sequence])
-
-  useEffect(() => {
-
-  }, [currentDirection])
 
   const reset = () => {
     setStartingPosition(randomizeStartingPosition(roomSize.x))
@@ -70,15 +36,22 @@ const App = () => {
     setSequence('')
   }
 
+  const runProgram = (newSequence) => {
+    setSequence(newSequence)
+    move([...newSequence], startingPosition, startingDirection, roomSize).then(res => {
+      setFinalDirection(res.direction)
+      setFinalPosition(res.position)
+    }) 
+  }
+
   return (
     <div className="App">
-      {console.log('direction', currentDirection)}
       <Container>
         <Header />
         <Container fluid>
           <Row>
             <Infobox />
-            <Display runnedSequence={sequence} runProgram={(newSequence) => setSequence(newSequence)} startingPosition={`${startingPosition.x}, ${startingPosition.y}, ${startingDirection}`}
+            <Display runnedSequence={sequence} runProgram={(newSequence) => runProgram(newSequence)} startingPosition={`${startingPosition.x}, ${startingPosition.y}, ${startingDirection}`}
             finalPosition={finalPosition && `${finalPosition.x}, ${finalPosition.y}, ${finalDirection}`}/>
             <SettingsAndResult runnedSequence={sequence} setRoomSize={setRoomSize} reset={reset}/>
           </Row>

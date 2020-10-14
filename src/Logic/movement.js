@@ -1,16 +1,13 @@
 const validateMove = (position, value, roomSize) => {
-    console.log('value', position, value, roomSize)
     if (value === '-') {
-        console.log('MINUS', position - 1 > -1)
         return position - 1 > -1
     }
     else {
-        console.log('PLUS', position + 1 < roomSize)
-        return position + 1 < roomSize
+        return position + 1 <= roomSize
     }
 }
 
-const setNewCoordinates = (position, direction, roomSize) => {
+const getCoordinates = (position, direction, roomSize) => {
     let xOrY = ''
     let value = ''
     switch (direction) {
@@ -24,11 +21,11 @@ const setNewCoordinates = (position, direction, roomSize) => {
             break
         case 'E':
             xOrY = 'x'
-            value = '-'
+            value = '+'
             break
         default:
             xOrY = 'x'
-            value = '+'
+            value = '-'
     }
     if(xOrY === 'y') {
         if(validateMove(position.y, value, roomSize.y)) {
@@ -54,11 +51,6 @@ const setNewCoordinates = (position, direction, roomSize) => {
     return position
 }
 
-const move = (currentPosition, currentDirection, roomSize ) => {
-    const newCoordinates = setNewCoordinates(currentPosition, currentDirection, roomSize)
-    return newCoordinates
-}
-
 const turn = (currentDirection, leftOrRight) => {
     const directions = ['N', 'E', 'S', 'W']
     const indexOfDirection = directions.indexOf(currentDirection)
@@ -67,9 +59,25 @@ const turn = (currentDirection, leftOrRight) => {
         newDirection = indexOfDirection === 0 ? directions[3] : directions[indexOfDirection - 1]
     }
     else {
-        newDirection = indexOfDirection === 4 ? directions[0] : directions[indexOfDirection + 1]
+        newDirection = indexOfDirection === 3 ? directions[0] : directions[indexOfDirection + 1]
     }
     return newDirection
 }
 
-export {move, turn}
+async function move (sequence, currentPosition, currentDirection, roomSize ) {
+    console.log('sequence:', sequence, sequence.length)
+    let direction = currentDirection
+    let position = currentPosition
+    sequence.forEach((moveType) => {
+        if(moveType === "L" || moveType === "R") {
+          direction = turn(direction, moveType)
+        }
+        else {
+          position = getCoordinates(position, direction, roomSize)
+          console.log('position', position)
+        }
+    })
+    return {position, direction}
+}
+
+export default move
